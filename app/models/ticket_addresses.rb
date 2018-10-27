@@ -2,35 +2,19 @@ require 'net/http'
 require 'uri'
 require 'json'
 
-class BitcoinCashTickets
-  def self.client
-    @client ||= new(BitcoinRPC.new(ENV['BITCOIN_RPC_URI'] || 'http://foo:j1DuzF7QRUp-iSXjgewO9T_WT1Qgrtz_XWOHCMn_O-Y=@bitcoin-abc-server:18332'))
-  end
-
-  def self.client=(client)
-    @client = client
-  end
-
-  def method_missing(method, *args)
-    if client.respond_to? method
-      client.send(method, *args)
-    else
-      super
-    end
-  end
-
-  def initialize(client)
-    @client = client
-  end
-
-  def create_ticket_address(event_id, ticket_batch_id)
+class TicketAddresses
+  def self.create_ticket_address(event_id, ticket_batch_id)
     account_name = "event##{event_id}:batch##{ticket_batch_id}"
     client.getnewaddress(account_name)
   end
 
-  def ticket_address_paid(address)
+  def self.ticket_address_paid(address)
     amount = client.getreceivedbyaddress address, 0
     amount
+  end
+
+  def self.client
+    @client ||= new(BitcoinRPC.new(ENV['BITCOIN_RPC_URI'] || 'http://foo:j1DuzF7QRUp-iSXjgewO9T_WT1Qgrtz_XWOHCMn_O-Y=@bitcoin-abc-server:18332'))
   end
 end
 

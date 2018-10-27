@@ -18,7 +18,7 @@ class TicketsController < ApplicationController
     batch = params[:batch_id] # for when an event has multiple types of tickets
     user_info = { anonymous: SecureRandom::hex } # instead of a random string this could have user info
 
-    address = BitcoinCashTickets.create_ticket_address(event, batch)
+    address = TicketAddresses.create_ticket_address(event, batch)
 
     ticket = Ticket.create!(
       event: event,
@@ -40,7 +40,7 @@ class TicketsController < ApplicationController
     address = params[:address]
     ticket = Ticket.find_by_address(address)
     verified = @ticket.verify(salt)
-    paid = BitcoinCashTickets.ticket_address_paid(address)
+    paid = TicketAddresses.ticket_address_paid(address)
     status = ticket.status
 
     render json: {
