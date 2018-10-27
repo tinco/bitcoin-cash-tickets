@@ -22,4 +22,10 @@ test:
 
 production:
   <<: *default
-  database: db/production.sqlite3
+  adapter: postgresql
+  encoding: unicode
+  database: eventcash
+  pool: 5
+  host: eventcash-postgres
+  username: postgres
+  password: supersecret
