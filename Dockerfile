@@ -14,5 +14,7 @@ RUN bundle
 ADD . /app
 
 EXPOSE 80
+
+ENV RAILS_LOG_TO_STDOUT true
 CMD ["rails", "server", "-b", "0.0.0.0", "-p", "80"]
 

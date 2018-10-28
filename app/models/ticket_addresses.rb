@@ -14,7 +14,7 @@ class TicketAddresses
   end
 
   def self.client
-    @client ||= new(BitcoinRPC.new(ENV['BITCOIN_RPC_URI'] || 'http://foo:j1DuzF7QRUp-iSXjgewO9T_WT1Qgrtz_XWOHCMn_O-Y=@bitcoin-abc-server:18332'))
+    @client ||= BitcoinRPC.new(ENV['BITCOIN_RPC_URI'] || 'http://foo:j1DuzF7QRUp-iSXjgewO9T_WT1Qgrtz_XWOHCMn_O-Y=@bitcoin-abc-server:18332')
   end
 end
 
