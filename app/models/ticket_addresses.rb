@@ -43,7 +43,7 @@ class BitcoinRPC
 end
 
 if $0 == __FILE__
-  h = BitcoinRPC.new(BITCOIN_RPC_URI || 'http://foo:j1DuzF7QRUp-iSXjgewO9T_WT1Qgrtz_XWOHCMn_O-Y=@bitcoin-abc-server:18332')
+  h = BitcoinRPC.new(ENV['BITCOIN_RPC_URI'] || 'http://foo:j1DuzF7QRUp-iSXjgewO9T_WT1Qgrtz_XWOHCMn_O-Y=@bitcoin-abc-server:18332')
   p h.getbalance
   p h.getinfo
   p h.getnewaddress

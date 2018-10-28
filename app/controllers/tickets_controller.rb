@@ -34,15 +34,15 @@ class TicketsController < ApplicationController
   # Creates a new unpaid ticket for an event
   def create
     event = Event.find(params[:event_id])
-    batch = params[:batch_id] # for when an event has multiple types of tickets
+    batch_id = params[:batch_id] # for when an event has multiple types of tickets
     amount = params[:amount] # amount of tickets
     user_info = { anonymous: SecureRandom::hex } # instead of a random string this could have user info
     price = event.price * amount
-    address = TicketAddresses.create_ticket_address(event, batch)
+    address = TicketAddresses.create_ticket_address(event.id, batch_id)
 
     ticket = Ticket.create!(
       event: event,
-      batch_id: batch,
+      batch_id: batch_id,
       amount: amount,
       price: price,
       user_info: user_info,
@@ -62,7 +62,7 @@ class TicketsController < ApplicationController
     salt = params[:salt]
     address = params[:address]
     ticket = Ticket.find_by_address(address)
-    verified = @ticket.verify(salt)
+    verified = ticket.verify(salt)
     paid = TicketAddresses.ticket_address_paid(address)
     status = ticket.status
 
